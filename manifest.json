@@ -1,11 +1,20 @@
 {
   "manifest_version": 2,
   "name": "Synonym Control-F",
-  "description": "Control-F that also searches through synonyms",
+  "description": "Control-F that also searches through synonyms.",
   "version": "1.0",
-  "permissions": [],
+  "permissions": [
+    "tabs",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
   "browser_action": {
-  	"default_icon":"icon.png",
-  	"default_popup":"popup.html"
+    "default_title": "Highlight synonyms"
   }
 }

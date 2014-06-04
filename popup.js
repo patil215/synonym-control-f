@@ -1,7 +1,21 @@
-function hello() {
+function search() {
 	console.log("Highlighting synonyms on page: ");
-	chrome.tabs.executeScript(null, {file:"jquery.js"});
-	chrome.tabs.executeScript(null, {file:"highlight.js"});
-	chrome.tabs.executeScript(null, {file: "synonymhighlight.js"});
+	query = $("#query").val();
+
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.tabs.executeScript(tab.id, {
+			file: "jquery.js"
+		});
+		chrome.tabs.executeScript(tab.id, {
+			file: "highlight.js"
+		});
+
+		chrome.tabs.executeScript(tab.id, {
+			file: 'synonymhighlight.js'
+		}, function() {
+			chrome.tabs.sendMessage(tab.id, query);
+		});
+	});
+
 }
-document.getElementById('submit').addEventListener('click', hello);
+document.getElementById('submit').addEventListener('click', search);

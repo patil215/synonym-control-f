@@ -44,23 +44,38 @@ function highlightQuery(query) {
 		backgroundColor: "#FFFF88"
 	});
 	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
+	$(".highlight").eq(scrollIndex).css({
+		backgroundColor: "#FF8000"
+	});
 	updateIndexUI();
 }
 
 function scrollToNext() {
+	$(".highlight").eq(scrollIndex).css({
+		backgroundColor: "#FFFF88"
+	});
 	scrollIndex++;
 	if(scrollIndex >= $(".highlight").length) {
 		scrollIndex = 0;
 	}
+	$(".highlight").eq(scrollIndex).css({
+		backgroundColor: "#FF8000"
+	});
 	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
 	updateIndexUI();
 }
 
 function scrollToPrevious() {
+	$(".highlight").eq(scrollIndex).css({
+		backgroundColor: "#FFFF88"
+	});
 	scrollIndex--;
 	if(scrollIndex < 0) {
 		scrollIndex = $(".highlight").length - 1;
 	}
+	$(".highlight").eq(scrollIndex).css({
+		backgroundColor: "#FF8000"
+	});
 	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
 	updateIndexUI();
 }

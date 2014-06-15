@@ -1,6 +1,26 @@
 window.onload = function() {
   document.getElementById("query").focus();
 };
+var tabId = 0;
+
+$(document).ready(function() {
+	chrome.tabs.getSelected(null, function(tab) {
+		tabId = tab.id;
+		chrome.tabs.executeScript(tabId, {
+			file: "jquery.js"
+		});
+		chrome.tabs.executeScript(tabId, {
+			file: "highlight.js"
+		});
+
+		chrome.tabs.executeScript(tabId, {
+			file: 'synonymhighlight.js'
+		}, function() {
+			chrome.tabs.sendMessage(tabId, ["initialize", ""]);
+		});
+	});
+});
+
 
 $("#query").keyup(function (e) {
     if (e.keyCode == 13) {
@@ -11,21 +31,7 @@ $("#query").keyup(function (e) {
 function search() {
 	console.log("Highlighting synonyms on page: ");
 	query = $("#query").val();
-
-	chrome.tabs.getSelected(null, function(tab) {
-		chrome.tabs.executeScript(tab.id, {
-			file: "jquery.js"
-		});
-		chrome.tabs.executeScript(tab.id, {
-			file: "highlight.js"
-		});
-
-		chrome.tabs.executeScript(tab.id, {
-			file: 'synonymhighlight.js'
-		}, function() {
-			chrome.tabs.sendMessage(tab.id, query);
-		});
-	});
+	chrome.tabs.sendMessage(tabId, ["query", query]);
 
 }
 document.getElementById('submit').addEventListener('click', search);

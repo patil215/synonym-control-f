@@ -1,5 +1,5 @@
 function readFile() {
-	var fileURL = chrome.extension.getURL("thesaurus.txt"); 
+	var fileURL = chrome.extension.getURL("thesaurus.txt");
 	var xmlreq = new XMLHttpRequest();
 	xmlreq.open("GET", fileURL, false); //false makes it syncronous, we'll just wait till it's done
 	xmlreq.send();
@@ -7,7 +7,7 @@ function readFile() {
 	return xmlreq.responseText.split("\n");
 }
 
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+function highlightQuery(query) {
 	var lineArray = readFile();
 	var synonyms = [];
 	var index = 1;
@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 		var line = lineArray[index];
 		var lineWords = line.split("|");
 		var numDefs = parseInt(lineWords[1]);
-		if(lineWords[0] == message) {
+		if(lineWords[0] == query) {
 			for(var d = index + 1; d < index + numDefs; d++) {
 				var synonymLine = lineArray[d];
 				var synonymWords = synonymLine.split("|");
@@ -28,9 +28,17 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 			index += (1 + numDefs);
 		}
 	}
-	$("body").highlight(message);
+	$("body").highlight(query);
 	$("body").highlight(synonyms);
 	$(".highlight").css({
 		backgroundColor: "#FFFF88"
 	});
+}
+
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+	if(message[0] == "initialize") {
+		readFile();
+	} else if (message[0] == "query") {
+		highlightQuery(message[1]);
+	}
 });

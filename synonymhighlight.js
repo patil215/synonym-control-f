@@ -1,3 +1,6 @@
+var scrollIndex = 0;
+
+
 function readFile() {
 	var fileURL = chrome.extension.getURL("thesaurus.txt");
 	var xmlreq = new XMLHttpRequest();
@@ -33,6 +36,23 @@ function highlightQuery(query) {
 	$(".highlight").css({
 		backgroundColor: "#FFFF88"
 	});
+	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
+}
+
+function scrollToNext() {
+	scrollIndex++;
+	if(scrollIndex >= $(".highlight").length) {
+		scrollIndex = 0;
+	}
+	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
+}
+
+function scrollToPrevious() {
+	scrollIndex--;
+	if(scrollIndex < 0) {
+		scrollIndex = $(".highlight").length - 1;
+	}
+	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
 }
 
 function dehighlight() {
@@ -46,5 +66,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 		highlightQuery(message[1]);
 	} else if(message[0] == "dehighlight") {
 		dehighlight();
+	} else if(message[0] == "next") {
+		scrollToNext();
+	} else if(message[0] == "previous") {
+		scrollToPrevious();
 	}
 });

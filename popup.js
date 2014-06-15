@@ -12,7 +12,9 @@ $(document).ready(function() {
 		chrome.tabs.executeScript(tabId, {
 			file: "highlight.js"
 		});
-
+		chrome.tabs.executeScript(tabId, {
+			file: "jquery.scrollTo.min.js"
+		});
 		chrome.tabs.executeScript(tabId, {
 			file: 'synonymhighlight.js'
 		}, function() {
@@ -34,14 +36,18 @@ function search() {
 	chrome.tabs.sendMessage(tabId, ["query", query]);
 }
 
-function dehighlight() {
-	chrome.tabs.sendMessage(tabId, ["dehighlight", ""]);
-}
-
 $("#submit").click(function() {
 	search();
 });
 
 $("#dehighlight").click(function() {
-	dehighlight();
+	chrome.tabs.sendMessage(tabId, ["dehighlight", ""]);
+});
+
+$("#previous").click(function() {
+	chrome.tabs.sendMessage(tabId, ["previous", ""]);
+});
+
+$("#next").click(function() {
+	chrome.tabs.sendMessage(tabId, ["next", ""]);
 });

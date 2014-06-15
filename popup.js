@@ -32,6 +32,16 @@ function search() {
 	console.log("Highlighting synonyms on page: ");
 	query = $("#query").val();
 	chrome.tabs.sendMessage(tabId, ["query", query]);
-
 }
-document.getElementById('submit').addEventListener('click', search);
+
+function dehighlight() {
+	chrome.tabs.sendMessage(tabId, ["dehighlight", ""]);
+}
+
+$("#submit").click(function() {
+	search();
+});
+
+$("#dehighlight").click(function() {
+	dehighlight();
+});

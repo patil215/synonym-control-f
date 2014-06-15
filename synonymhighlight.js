@@ -35,10 +35,16 @@ function highlightQuery(query) {
 	});
 }
 
+function dehighlight() {
+	$("body").unhighlight();
+}
+
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
 	if(message[0] == "initialize") {
 		readFile();
 	} else if (message[0] == "query") {
 		highlightQuery(message[1]);
+	} else if(message[0] == "dehighlight") {
+		dehighlight();
 	}
 });

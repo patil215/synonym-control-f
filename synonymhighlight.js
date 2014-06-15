@@ -10,6 +10,13 @@ function readFile() {
 	return xmlreq.responseText.split("\n");
 }
 
+function updateIndexUI() {
+	chrome.runtime.sendMessage({
+		currentIndex: scrollIndex,
+		total: $(".highlight").length
+	});
+}
+
 function highlightQuery(query) {
 	var lineArray = readFile();
 	var synonyms = [];
@@ -37,6 +44,7 @@ function highlightQuery(query) {
 		backgroundColor: "#FFFF88"
 	});
 	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
+	updateIndexUI();
 }
 
 function scrollToNext() {
@@ -45,6 +53,7 @@ function scrollToNext() {
 		scrollIndex = 0;
 	}
 	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
+	updateIndexUI();
 }
 
 function scrollToPrevious() {
@@ -53,6 +62,7 @@ function scrollToPrevious() {
 		scrollIndex = $(".highlight").length - 1;
 	}
 	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
+	updateIndexUI();
 }
 
 function dehighlight() {

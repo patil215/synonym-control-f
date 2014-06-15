@@ -23,6 +23,10 @@ $(document).ready(function() {
 	});
 });
 
+chrome.runtime.onMessage.addListener(function(message, sender) {
+	$("#indexText").text((message.currentIndex + 1) + " of " + message.total);
+});
+
 
 $("#query").keyup(function (e) {
     if (e.keyCode == 13) {

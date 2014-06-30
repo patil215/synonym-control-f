@@ -67,6 +67,7 @@ $("#submit").click(function() {
 });
 
 $("#dehighlight").click(function() {
+	$("#indexText").text("0 of 0");
 	$("#query").val("");
 	$("#query").focus();
 	chrome.tabs.sendMessage(tabId, ["dehighlight", ""]);

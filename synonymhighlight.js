@@ -1,5 +1,5 @@
 var scrollIndex = 0;
-var scrollTime = 50;
+var scrollTime = 0;
 
 
 function readFile() {

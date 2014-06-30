@@ -1,7 +1,14 @@
 var lastQueryInput;
 window.onload = function() {
+    connectToBackgroundPage();
     document.getElementById("query").focus();
 };
+
+function connectToBackgroundPage() {
+    var port = chrome.runtime.connect({
+        name: "backgroundscript"
+    });
+}
 var tabId = 0;
 $(document).ready(function() {
     chrome.tabs.getSelected(null, function(tab) {
@@ -18,7 +25,7 @@ $(document).ready(function() {
         chrome.tabs.executeScript(tabId, {
             file: 'synonymhighlight.js'
         }, function() {
-        	sendMessage("initialize", "");
+            sendMessage("initialize", "");
         });
     });
 });
@@ -41,11 +48,11 @@ $("#query").keyup(function(e) {
     // If shift key held down, go previous
     if (e.keyCode == 13) {
         if (e.shiftKey) {
-        	sendMessage("previous", "");
+            sendMessage("previous", "");
         } else {
             // If it's the same query, go to the next result, otherwise, do a new search
             if ($("#query").val() == lastQueryInput) {
-            	sendMessage("next", "");
+                sendMessage("next", "");
             } else {
                 search();
             }
@@ -54,7 +61,7 @@ $("#query").keyup(function(e) {
 });
 
 function sendMessage(name, details) {
-	chrome.tabs.sendMessage(tabId, [name, details]);
+    chrome.tabs.sendMessage(tabId, [name, details]);
 }
 
 function search() {
@@ -74,8 +81,8 @@ $("#dehighlight").click(function() {
     sendMessage("dehighlight", "");
 });
 $("#previous").click(function() {
-	sendMessage("previous", "");
+    sendMessage("previous", "");
 });
 $("#next").click(function() {
-	sendMessage("next", "");
+    sendMessage("next", "");
 });

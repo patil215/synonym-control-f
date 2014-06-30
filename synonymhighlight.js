@@ -87,15 +87,21 @@ function dehighlight() {
 }
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-	if(message[0] == "initialize") {
-		readFile();
-	} else if (message[0] == "query") {
-		highlightQuery(message[1]);
-	} else if(message[0] == "dehighlight") {
-		dehighlight();
-	} else if(message[0] == "next") {
-		scrollToNext();
-	} else if(message[0] == "previous") {
-		scrollToPrevious();
+	switch(message[0]) {
+		case "initialize":
+			readFile();
+			break;
+		case "query":
+			highlightQuery(message[1]);
+			break;
+		case "dehighlight":
+			dehighlight();
+			break;
+		case "next":
+			scrollToNext();
+			break;
+		case "previous":
+			scrollToPrevious();
+			break;
 	}
 });

@@ -18,7 +18,7 @@ $(document).ready(function() {
         chrome.tabs.executeScript(tabId, {
             file: 'synonymhighlight.js'
         }, function() {
-            chrome.tabs.sendMessage(tabId, ["initialize", ""]);
+        	sendMessage("initialize", "");
         });
     });
 });
@@ -41,11 +41,11 @@ $("#query").keyup(function(e) {
     // If shift key held down, go previous
     if (e.keyCode == 13) {
         if (e.shiftKey) {
-            chrome.tabs.sendMessage(tabId, ["previous", ""]);
+        	sendMessage("previous", "");
         } else {
             // If it's the same query, go to the next result, otherwise, do a new search
             if ($("#query").val() == lastQueryInput) {
-                chrome.tabs.sendMessage(tabId, ["next", ""]);
+            	sendMessage("next", "");
             } else {
                 search();
             }
@@ -53,12 +53,16 @@ $("#query").keyup(function(e) {
     }
 });
 
+function sendMessage(name, details) {
+	chrome.tabs.sendMessage(tabId, [name, details]);
+}
+
 function search() {
     console.log("Highlighting synonyms on page: ");
     query = $("#query").val();
     lastQueryInput = query;
-    chrome.tabs.sendMessage(tabId, ["dehighlight", ""]);
-    chrome.tabs.sendMessage(tabId, ["query", query]);
+    sendMessage("dehighlight", "");
+    sendMessage("query", query);
 }
 $("#submit").click(function() {
     search();
@@ -67,11 +71,11 @@ $("#dehighlight").click(function() {
     $("#indexText").text("0 of 0");
     $("#query").val("");
     $("#query").focus();
-    chrome.tabs.sendMessage(tabId, ["dehighlight", ""]);
+    sendMessage("dehighlight", "");
 });
 $("#previous").click(function() {
-    chrome.tabs.sendMessage(tabId, ["previous", ""]);
+	sendMessage("previous", "");
 });
 $("#next").click(function() {
-    chrome.tabs.sendMessage(tabId, ["next", ""]);
+	sendMessage("next", "");
 });

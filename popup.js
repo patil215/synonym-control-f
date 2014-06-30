@@ -10,7 +10,7 @@ $(document).ready(function() {
             file: "jquery.js"
         });
         chrome.tabs.executeScript(tabId, {
-            file: "highlight.js"
+            file: "highlight.min.js"
         });
         chrome.tabs.executeScript(tabId, {
             file: "jquery.scrollTo.min.js"

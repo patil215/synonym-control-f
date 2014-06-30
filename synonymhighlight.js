@@ -19,21 +19,6 @@ function updateIndexUI() {
 	});
 }
 
-function clearIndexUI() {
-	chrome.runtime.sendMessage({
-		command: "IndexUI",
-		currentIndex: 0,
-		total: 0
-	});
-}
-
-function clearTextBox() {
-	chrome.runtime.sendMessage({
-		command: "TextBox",
-		queryText: ""
-	});
-}
-
 function highlightQuery(query) {
 	var lineArray = readFile();
 	var synonyms = [];
@@ -99,8 +84,6 @@ function scrollToPrevious() {
 
 function dehighlight() {
 	$("body").unhighlight();
-	clearIndexUI();
-	clearTextBox();
 }
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {

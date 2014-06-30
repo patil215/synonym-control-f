@@ -1,3 +1,6 @@
+var lastQueryInput;
+
+
 window.onload = function() {
   document.getElementById("query").focus();
 };
@@ -42,13 +45,20 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
 
 $("#query").keyup(function (e) {
     if (e.keyCode == 13) {
-        search();
+    	// If it's the same query, go to the next result, otherwise, do a new search
+    	if($("#query").val() == lastQueryInput) {
+    		chrome.tabs.sendMessage(tabId, ["next", ""]);
+    	} else {
+        	search();
+    	}
     }
 });
 
 function search() {
 	console.log("Highlighting synonyms on page: ");
 	query = $("#query").val();
+	lastQueryInput = query;
+	chrome.tabs.sendMessage(tabId, ["dehighlight", ""]);
 	chrome.tabs.sendMessage(tabId, ["query", query]);
 }
 
@@ -57,6 +67,8 @@ $("#submit").click(function() {
 });
 
 $("#dehighlight").click(function() {
+	$("#query").val("");
+	$("#query").focus();
 	chrome.tabs.sendMessage(tabId, ["dehighlight", ""]);
 });
 

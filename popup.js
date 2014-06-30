@@ -24,7 +24,19 @@ $(document).ready(function() {
 });
 
 chrome.runtime.onMessage.addListener(function(message, sender) {
-	$("#indexText").text((message.currentIndex + 1) + " of " + message.total);
+	switch(message.command) {
+		case "IndexUI":
+			if(message.total == 0) {
+				$("#indexText").text("0 of 0");
+			} else {
+				$("#indexText").text((message.currentIndex + 1) + " of " + message.total);
+			}
+			break;
+		case "TextBox":
+			$("#query").val(message.queryText);
+			$("#query").focus();
+			break;
+	}
 });
 
 

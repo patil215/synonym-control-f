@@ -1,4 +1,5 @@
 var scrollIndex = 0;
+var scrollTime = 50;
 
 
 function readFile() {
@@ -12,8 +13,24 @@ function readFile() {
 
 function updateIndexUI() {
 	chrome.runtime.sendMessage({
+		command: "IndexUI",
 		currentIndex: scrollIndex,
 		total: $(".highlight").length
+	});
+}
+
+function clearIndexUI() {
+	chrome.runtime.sendMessage({
+		command: "IndexUI",
+		currentIndex: 0,
+		total: 0
+	});
+}
+
+function clearTextBox() {
+	chrome.runtime.sendMessage({
+		command: "TextBox",
+		queryText: ""
 	});
 }
 
@@ -43,7 +60,7 @@ function highlightQuery(query) {
 	$(".highlight").css({
 		backgroundColor: "#FFFF88"
 	});
-	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
+	$.scrollTo($(".highlight").get(scrollIndex), scrollTime, {offset: {top:-(($(window).height() / 2))}});
 	$(".highlight").eq(scrollIndex).css({
 		backgroundColor: "#FF8000"
 	});
@@ -61,7 +78,7 @@ function scrollToNext() {
 	$(".highlight").eq(scrollIndex).css({
 		backgroundColor: "#FF8000"
 	});
-	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
+	$.scrollTo($(".highlight").get(scrollIndex), scrollTime, {offset: {top:-($(window).height() / 2)}});
 	updateIndexUI();
 }
 
@@ -76,12 +93,14 @@ function scrollToPrevious() {
 	$(".highlight").eq(scrollIndex).css({
 		backgroundColor: "#FF8000"
 	});
-	$.scrollTo($(".highlight").get(scrollIndex), 200, {offset: {top:-40}});
+	$.scrollTo($(".highlight").get(scrollIndex), scrollTime, {offset: {top:-($(window).height() / 2)}});
 	updateIndexUI();
 }
 
 function dehighlight() {
 	$("body").unhighlight();
+	clearIndexUI();
+	clearTextBox();
 }
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {

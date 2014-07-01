@@ -44,7 +44,7 @@ chrome.runtime.onMessage.addListener(function(message, sender) {
             break;
     }
 });
-$("#query").keyup(function(e) {
+$("#query").keypress(function(e) {
     // If shift key held down, go previous
     if (e.keyCode == 13) {
         if (e.shiftKey) {

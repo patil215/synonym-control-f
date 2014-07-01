@@ -1,9 +1,51 @@
-#submit{
-	float:left;
-}
-#dehighlight {
-	float:right;
+#submit {
+  vertical-align: top;
+  padding: 6px;
+  font-size: 12px;
+  color:white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #7f8c8d;
+  border: 0;
+  border-bottom: 2px solid #6d7b7c;
+  display: block;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #6d7b7c;
+  box-shadow: inset 0 -2px #6d7b7c;
 }
 #indexText {
-	font-size: 36px;
+	display: inline;
+	font-size: 18px;
+	height: 30px;
+	line-height: 30px;
+	vertical-align: text-bottom;
+	margin-left: 6px;
+	text-align: center;
+	color: #7f8c8d;
+}
+.navigation {
+  display: inline;
+  vertical-align: top;
+  width: 30px;
+  height: 30px;
+  float:right;
+  padding: 0;
+  font-size: 22px;
+  color:white;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background: #7f8c8d;
+  border: 0;
+  border-bottom: 2px solid #6d7b7c;
+  cursor: pointer;
+  -webkit-box-shadow: inset 0 -2px #6d7b7c;
+  box-shadow: inset 0 -2px #6d7b7c;
+}
+#query {
+	display: inline;
+	border: 2px solid;
+	border-color: #7f8c8d;
+	box-shadow: inset 0 -2px #6d7b7c;	
+	padding: 2px;
+	font-size: 14px;
 }

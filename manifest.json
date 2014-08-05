@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Synonym Control-F",
   "description": "Control-F that also searches through synonyms.",
-  "version": "1.0",
+  "version": "1.1",
   "permissions": [
     "tabs",
     "http://*/*",
@@ -10,7 +10,8 @@
   ],
   "browser_action": {
     "default_title": "Highlight synonyms",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon":"icon/icon-38.png"
   },
   "web_accessible_resources": [
     "thesaurus.txt"
